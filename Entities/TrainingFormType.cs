@@ -1,4 +1,4 @@
-﻿namespace Database.Entities
+﻿namespace Entities
 {
     public enum TrainingFormType
     {

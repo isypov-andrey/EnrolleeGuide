@@ -1,4 +1,4 @@
-﻿using Database.Entities;
+﻿using Entities;
 using MySql.Data.EntityFramework;
 using System.Data.Entity;
 

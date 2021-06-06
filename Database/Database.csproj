@@ -52,29 +52,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\City.cs" />
-    <Compile Include="Entities\Address.cs" />
     <Compile Include="DataContext.cs" />
-    <Compile Include="Entities\Program.cs" />
-    <Compile Include="Entities\Speciality.cs" />
-    <Compile Include="Entities\Subject.cs" />
-    <Compile Include="Entities\TrainingForm.cs" />
-    <Compile Include="Entities\TrainingFormType.cs" />
-    <Compile Include="Entities\University.cs" />
-    <Compile Include="Migrations\202106061604113_Initialization.cs" />
-    <Compile Include="Migrations\202106061604113_Initialization.designer.cs">
-      <DependentUpon>202106061604113_Initialization.cs</DependentUpon>
+    <Compile Include="Migrations\202106061635400_Initialization.cs" />
+    <Compile Include="Migrations\202106061635400_Initialization.designer.cs">
+      <DependentUpon>202106061635400_Initialization.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ReadRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202106061604113_Initialization.resx">
-      <DependentUpon>202106061604113_Initialization.cs</DependentUpon>
+    <ProjectReference Include="..\Database.Abstractions\Database.Abstractions.csproj">
+      <Project>{D4A93418-A376-4034-BD49-13D74BD83710}</Project>
+      <Name>Database.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{5D847EBD-F5E8-4BFB-9D43-E1F9FFEDA7D5}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202106061635400_Initialization.resx">
+      <DependentUpon>202106061635400_Initialization.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Database.Entities
+namespace Entities
 {
-    public class Subject
+    public class City
     {
 
         [Key]
