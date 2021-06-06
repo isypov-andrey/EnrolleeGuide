@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Database
+namespace Database.Entities
 {
-    public class Speciality
+    public class City
     {
+
+        [Key]
         public int Id { get; set; }
+
         /// <summary>
         /// Наименование
         /// </summary>
+        [Required]
+        [MaxLength(255)]
         public string Name { get; set; }
     }
 }

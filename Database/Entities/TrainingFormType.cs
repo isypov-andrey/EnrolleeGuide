@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Database
+﻿namespace Database.Entities
 {
     public enum TrainingFormType
     {
@@ -12,14 +6,17 @@ namespace Database
         /// Очная
         /// </summary>
         FullTime = 1,
+
         /// <summary>
         /// Очно-заочная
         /// </summary>
         PartTime = 2,
+
         /// <summary>
         /// Заочная
         /// </summary>
         Extramural = 3,
+
         /// <summary>
         /// Дистанционная
         /// </summary>
