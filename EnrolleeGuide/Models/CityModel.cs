@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Entities;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,29 @@ namespace EnrolleeGuide.Models
             {
                 SetProperty(ref _name, value);
             }
+        }
+
+        public static CityModel GetFromCity(City city)
+        {
+            if (city == null)
+            {
+                return null;
+            }
+
+            return new CityModel
+            {
+                Id = city.Id,
+                Name = city.Name
+            };
+        }
+
+        public City ToCity()
+        {
+            return new City
+            {
+                Id = Id,
+                Name = Name
+            };
         }
     }
 }

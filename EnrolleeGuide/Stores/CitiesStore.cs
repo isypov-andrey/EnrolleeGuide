@@ -18,33 +18,27 @@ namespace EnrolleeGuide.Stores
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
+        public async Task<CityModel> GetAsync(CityModel itemModel)
+        {
+            return CityModel.GetFromCity(await _repository.GetAsync(itemModel.Id));
+        }
+
         public async Task<ICollection<CityModel>> GetAllAsync()
         {
             var cities = await _repository.GetAllAsync();
 
-            return cities.Select(
-                    city => new CityModel
-                    {
-                        Id = city.Id,
-                        Name = city.Name
-                    }
-                )
+            return cities.Select(CityModel.GetFromCity)
                 .ToList();
         }
 
         public async Task SaveAsync(CityModel itemModel)
         {
-            var item = new City
-            {
-                Id = itemModel.Id,
-                Name = itemModel.Name
-            };
-            await _repository.SaveAsync(item);
+            await _repository.SaveAsync(itemModel.ToCity());
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(CityModel itemModel)
         {
-            await _repository.DeleteAsync(id);
+            await _repository.DeleteAsync(itemModel.Id);
         }
     }
 }
