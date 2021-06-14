@@ -83,9 +83,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\SubjectModel.cs" />
+    <Compile Include="Models\SpecialityModel.cs" />
+    <Compile Include="Stores\SpecialitiesStore.cs" />
+    <Compile Include="Stores\SubjectsStore.cs" />
     <Compile Include="Stores\CitiesStore.cs" />
     <Compile Include="Stores\IStore.cs" />
+    <Compile Include="ViewModels\SubjectItemsViewModel.cs" />
+    <Compile Include="ViewModels\SpecialityItemsViewModel.cs" />
     <Compile Include="ViewModels\ItemsViewModelBase.cs" />
+    <Page Include="Views\SpecialityItemsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SubjectItemsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Compile Include="Views\ProgramItemsView.xaml.cs">
       <DependentUpon>ProgramItemsView.xaml</DependentUpon>
     </Compile>
@@ -123,6 +137,12 @@
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\CityItemsViewModel.cs" />
+    <Compile Include="Views\SpecialityItemsView.xaml.cs">
+      <DependentUpon>SpecialityItemsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubjectItemsView.xaml.cs">
+      <DependentUpon>SubjectItemsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CityItemsView.xaml.cs">
       <DependentUpon>CityItemsView.xaml</DependentUpon>
     </Compile>

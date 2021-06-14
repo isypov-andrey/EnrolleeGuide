@@ -3,11 +3,11 @@
 namespace EnrolleeGuide.Views
 {
     /// <summary>
-    /// Interaction logic for UniversityListItemView.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class ProgramListItemView : UserControl
+    public partial class SubjectItemsView : UserControl
     {
-        public ProgramListItemView()
+        public SubjectItemsView()
         {
             InitializeComponent();
         }

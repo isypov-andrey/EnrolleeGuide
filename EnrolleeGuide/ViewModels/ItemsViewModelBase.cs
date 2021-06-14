@@ -90,13 +90,6 @@ namespace EnrolleeGuide.ViewModels
 
         protected abstract string DeleteConfirmationMessage(TItem item);
 
-        private async Task SaveAsync(TItem item)
-        {
-            await _store.SaveAsync(item);
-
-            await LoadDataAsync();
-        }
-
         private void Create()
         {
             SelectedItem = new TItem();
@@ -116,6 +109,15 @@ namespace EnrolleeGuide.ViewModels
             SelectedItem = loadedItem;
         }
 
+        private async Task SaveAsync(TItem item)
+        {
+            await _store.SaveAsync(item);
+
+            SelectedItem = default;
+
+            await LoadDataAsync();
+        }
+
         private async Task DeleteAsync(TItem item)
         {
             if (item == null)
@@ -130,6 +132,8 @@ namespace EnrolleeGuide.ViewModels
             }
 
             await _store.DeleteAsync(item);
+
+            SelectedItem = default;
 
             await LoadDataAsync();
         }

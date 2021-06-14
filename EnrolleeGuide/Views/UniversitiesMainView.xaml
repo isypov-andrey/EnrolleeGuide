@@ -35,7 +35,7 @@
                 <ComboBox x:Name="subjectsComboBox" Width="198" Margin="5">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Name="chkCountry" Width="220" Checked="AllCheckbocx_CheckedAndUnchecked" Unchecked="AllCheckbocx_CheckedAndUnchecked" Content="{Binding Country_Name}" IsChecked="{Binding Check_Status}" CommandParameter="{Binding Country_ID}" />
+                            <CheckBox Name="chkCountry" Width="220" Content="{Binding Country_Name}" IsChecked="{Binding Check_Status}" CommandParameter="{Binding Country_ID}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

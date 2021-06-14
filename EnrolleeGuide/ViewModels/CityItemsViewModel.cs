@@ -1,11 +1,5 @@
 ﻿using EnrolleeGuide.Models;
 using EnrolleeGuide.Stores;
-using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnrolleeGuide.ViewModels
 {
@@ -15,6 +9,6 @@ namespace EnrolleeGuide.ViewModels
         {
         }
 
-        protected override string DeleteConfirmationMessage(CityModel city) => $"Вы уверены, что хотите удалить город '{city.Name}'?";
+        protected override string DeleteConfirmationMessage(CityModel item) => $"Вы уверены, что хотите удалить город '{item.Name}'?";
     }
 }

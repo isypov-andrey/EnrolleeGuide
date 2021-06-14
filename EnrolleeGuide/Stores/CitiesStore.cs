@@ -20,20 +20,20 @@ namespace EnrolleeGuide.Stores
 
         public async Task<CityModel> GetAsync(CityModel itemModel)
         {
-            return CityModel.GetFromCity(await _repository.GetAsync(itemModel.Id));
+            return CityModel.GetFromDomain(await _repository.GetAsync(itemModel.Id));
         }
 
         public async Task<ICollection<CityModel>> GetAllAsync()
         {
             var cities = await _repository.GetAllAsync();
 
-            return cities.Select(CityModel.GetFromCity)
+            return cities.Select(CityModel.GetFromDomain)
                 .ToList();
         }
 
         public async Task SaveAsync(CityModel itemModel)
         {
-            await _repository.SaveAsync(itemModel.ToCity());
+            await _repository.SaveAsync(itemModel.ToDomain());
         }
 
         public async Task DeleteAsync(CityModel itemModel)
