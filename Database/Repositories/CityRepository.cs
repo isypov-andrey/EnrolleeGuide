@@ -16,6 +16,13 @@ namespace Database.Repositories
             _readContext = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
         }
 
+        public async Task<City> GetAsync(int id)
+        {
+            return await _readContext.Cities
+                .AsNoTracking()
+                .FirstOrDefaultAsync(city => city.Id == id);
+        }
+
         public async Task<ICollection<City>> GetAllAsync()
         {
             return await _readContext.Cities

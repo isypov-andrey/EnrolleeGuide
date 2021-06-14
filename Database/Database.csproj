@@ -57,6 +57,10 @@
     <Compile Include="Migrations\202106061635400_Initialization.designer.cs">
       <DependentUpon>202106061635400_Initialization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106141821006_ProgramSubjectsManyToMany.cs" />
+    <Compile Include="Migrations\202106141821006_ProgramSubjectsManyToMany.designer.cs">
+      <DependentUpon>202106141821006_ProgramSubjectsManyToMany.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CityRepository.cs" />
@@ -74,6 +78,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202106061635400_Initialization.resx">
       <DependentUpon>202106061635400_Initialization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106141821006_ProgramSubjectsManyToMany.resx">
+      <DependentUpon>202106141821006_ProgramSubjectsManyToMany.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
