@@ -10,8 +10,10 @@ namespace EnrolleeGuide.Stores
     {
         Task<ICollection<TItem>> GetAllAsync();
 
+        Task<TItem> GetAsync(TItem itemModel);
+
         Task SaveAsync(TItem itemModel);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(TItem itemModel);
     }
 }

@@ -13,7 +13,8 @@ namespace EnrolleeGuide.ViewModels
     {
         public CityItemsViewModel(CitiesStore store) : base("Города", store)
         {
-
         }
+
+        protected override string DeleteConfirmationMessage(CityModel city) => $"Вы уверены, что хотите удалить город '{city.Name}'?";
     }
 }

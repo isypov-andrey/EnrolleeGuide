@@ -5,10 +5,11 @@ using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace EnrolleeGuide.ViewModels
 {
-    public abstract class ItemsViewModelBase<TItem> : BindableBase, INavigationAware
+    public abstract class ItemsViewModelBase<TItem> : BindableBase, INavigationAware where TItem : new()
     {
         private readonly IStore<TItem> _store;
 
@@ -45,18 +46,32 @@ namespace EnrolleeGuide.ViewModels
             }
             set
             {
-                SetProperty(ref _selectedItem, value);
+                if (SetProperty(ref _selectedItem, value))
+                {
+                    RaisePropertyChanged(nameof(IsItemSelected));
+                }
             }
         }
 
-        public DelegateCommand<int?> DeleteCommand { get; private set; }
+        public bool IsItemSelected => SelectedItem != null;
+
+        public DelegateCommand<TItem> SelectCommand { get; private set; }
+
+        public DelegateCommand CreateCommand { get; private set; }
+
+        public DelegateCommand<TItem> SaveCommand { get; private set; }
+
+        public DelegateCommand<TItem> DeleteCommand { get; private set; }
 
         public ItemsViewModelBase(string title, IStore<TItem> store)
         {
             Title = title;
             _store = store;
 
-            DeleteCommand = new DelegateCommand<int?>(async id => await DeleteAsync(id));
+            SelectCommand = new DelegateCommand<TItem>(async item => await LoadItemAsync(item));
+            CreateCommand = new DelegateCommand(Create);
+            SaveCommand = new DelegateCommand<TItem>(async item => await SaveAsync(item));
+            DeleteCommand = new DelegateCommand<TItem>(async item => await DeleteAsync(item));
         }
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
@@ -73,9 +88,18 @@ namespace EnrolleeGuide.ViewModels
         {
         }
 
-        public async Task SaveAsync(TItem item)
+        protected abstract string DeleteConfirmationMessage(TItem item);
+
+        private async Task SaveAsync(TItem item)
         {
             await _store.SaveAsync(item);
+
+            await LoadDataAsync();
+        }
+
+        private void Create()
+        {
+            SelectedItem = new TItem();
         }
 
         private async Task LoadDataAsync()
@@ -85,14 +109,27 @@ namespace EnrolleeGuide.ViewModels
             Items = new ObservableCollection<TItem>(items);
         }
 
-        private async Task DeleteAsync(int? id)
+        private async Task LoadItemAsync(TItem itemModel)
         {
-            if (!id.HasValue)
+            var loadedItem = await _store.GetAsync(itemModel);
+
+            SelectedItem = loadedItem;
+        }
+
+        private async Task DeleteAsync(TItem item)
+        {
+            if (item == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(item));
             }
 
-            await _store.DeleteAsync(id.Value);
+            var messageBoxResult = MessageBox.Show(DeleteConfirmationMessage(item), "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (messageBoxResult != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            await _store.DeleteAsync(item);
 
             await LoadDataAsync();
         }
