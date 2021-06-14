@@ -86,6 +86,12 @@
     <Compile Include="Stores\CitiesStore.cs" />
     <Compile Include="Stores\IStore.cs" />
     <Compile Include="ViewModels\ItemsViewModelBase.cs" />
+    <Compile Include="Views\ProgramItemsView.xaml.cs">
+      <DependentUpon>ProgramItemsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UniversityItemsView.xaml.cs">
+      <DependentUpon>UniversityItemsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UniversitiesMainView.xaml.cs">
       <DependentUpon>UniversitiesMainView.xaml</DependentUpon>
     </Compile>
@@ -95,6 +101,14 @@
     <Compile Include="Views\UniversityListItemView.xaml.cs">
       <DependentUpon>UniversityListItemView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\ProgramItemsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UniversityItemsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\CityItemsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
