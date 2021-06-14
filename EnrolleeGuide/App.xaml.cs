@@ -24,11 +24,6 @@ namespace EnrolleeGuide
             containerRegistry.RegisterForNavigation<CityItemsView>();
             containerRegistry.RegisterForNavigation<SpecialityItemsView>();
             containerRegistry.RegisterForNavigation<SubjectItemsView>();
-
-            containerRegistry.Register<CitiesStore>();
-
-            containerRegistry.Register<CityRepository>();
-            containerRegistry.Register<DataContext>();
         }
 
         protected override Window CreateShell()
