@@ -73,7 +73,7 @@
             </GridSplitter>
             <Border Grid.Column="2" Grid.Row="0" BorderThickness="1" BorderBrush="Gray">
                 <DockPanel Visibility="{Binding DataContext.IsItemSelected, ElementName=ItemsControl, Converter={StaticResource BooleanToVisibilityConverter}}" Background="White" Margin="0">
-                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Margin="5"
                             HorizontalAlignment="Right"
                             CommandParameter="{Binding SelectedItem}"
