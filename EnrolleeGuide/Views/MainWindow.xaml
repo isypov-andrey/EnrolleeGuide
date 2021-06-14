@@ -18,6 +18,8 @@
     <DockPanel Margin="0,0,2,0">
         <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="Справочники">
+                <MenuItem Header="Специальности" Command="{Binding NavigateCommand}" CommandParameter="SpecialityItemsView"></MenuItem>
+                <MenuItem Header="Предметы" Command="{Binding NavigateCommand}" CommandParameter="SubjectItemsView"></MenuItem>
                 <MenuItem Header="Города" Command="{Binding NavigateCommand}" CommandParameter="CityItemsView"></MenuItem>
                 <!--<MenuItem Header="Open Project" >
                     <MenuItem Header="WinForms"></MenuItem>

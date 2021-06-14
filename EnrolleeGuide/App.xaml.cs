@@ -22,6 +22,9 @@ namespace EnrolleeGuide
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<CityItemsView>();
+            containerRegistry.RegisterForNavigation<SpecialityItemsView>();
+            containerRegistry.RegisterForNavigation<SubjectItemsView>();
+
             containerRegistry.Register<CitiesStore>();
 
             containerRegistry.Register<CityRepository>();

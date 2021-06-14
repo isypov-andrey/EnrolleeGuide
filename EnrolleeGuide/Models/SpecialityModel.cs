@@ -3,7 +3,7 @@ using Prism.Mvvm;
 
 namespace EnrolleeGuide.Models
 {
-    public class CityModel : BindableBase
+    public class SpecialityModel : BindableBase
     {
         public int Id { get; set; }
 
@@ -21,23 +21,23 @@ namespace EnrolleeGuide.Models
             }
         }
 
-        public static CityModel GetFromDomain(City city)
+        public static SpecialityModel GetFromDomain(Speciality speciality)
         {
-            if (city == null)
+            if (speciality == null)
             {
                 return null;
             }
 
-            return new CityModel
+            return new SpecialityModel
             {
-                Id = city.Id,
-                Name = city.Name
+                Id = speciality.Id,
+                Name = speciality.Name
             };
         }
 
-        public City ToDomain()
+        public Speciality ToDomain()
         {
-            return new City
+            return new Speciality
             {
                 Id = Id,
                 Name = Name
