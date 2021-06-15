@@ -111,8 +111,11 @@
                             <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,5">Формы обучения:</TextBlock>
                             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding SelectedItem.TrainingForms}" Height="100">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Адрес" Width="2*"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Телефон" Width="*"/>
+                                    <DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Тип" SelectedValueBinding="{x:Null}" SelectedItemBinding="{x:Null}" TextBinding="{x:Null}"/>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Длительность"/>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Стоимость"/>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Проходной балл"/>
+                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Бюджетных мест"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
