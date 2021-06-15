@@ -46,6 +46,11 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="1"
+                                            CommandParameter="{Binding}"
+                                            Command="{Binding Path=DataContext.OpenProgramsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=DataGrid}}">
+                                        <StaticResource ResourceKey="BookImage"/>
+                                    </Button>
                                     <Button Grid.Column="0"
                                             CommandParameter="{Binding}"
                                             Command="{Binding Path=DataContext.SelectCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=DataGrid}}"

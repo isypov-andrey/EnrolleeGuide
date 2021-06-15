@@ -51,7 +51,7 @@ namespace EnrolleeGuide.Models
         private ObservableCollection<AddressModel> _addresses = new ObservableCollection<AddressModel>();
 
         /// <summary>
-        /// Идентификатор города расположения
+        /// Адреса
         /// </summary>
         public ObservableCollection<AddressModel> Addresses
         {
@@ -76,14 +76,7 @@ namespace EnrolleeGuide.Models
             if (university.Addresses?.Any() == true)
             {
                 universityModel.Addresses.AddRange(
-                    university.Addresses.Select(
-                        address => new AddressModel
-                        {
-                            Id = address.Id,
-                            FullAddress = address.FullAddress,
-                            Phone = address.Phone
-                        }
-                    )
+                    university.Addresses.Select(AddressModel.GetFromDomain)
                 );
             }
 
@@ -98,14 +91,7 @@ namespace EnrolleeGuide.Models
                 Name = Name,
                 Description = Description,
                 CityId = CityId,
-                Addresses = Addresses.Select(
-                        address => new Address
-                        {
-                            Id = address.Id,
-                            FullAddress = address.FullAddress,
-                            Phone = address.Phone
-                        }
-                    )
+                Addresses = Addresses.Select(address => address.ToDomain())
                     .ToList()
             };
         }

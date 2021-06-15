@@ -14,11 +14,24 @@
                         Id = c.Int(nullable: false, identity: true),
                         FullAddress = c.String(nullable: false, maxLength: 500, storeType: "nvarchar"),
                         Phone = c.String(maxLength: 20, storeType: "nvarchar"),
-                        University_Id = c.Int(),
+                        UniversityId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Universities", t => t.University_Id)
-                .Index(t => t.University_Id);
+                .ForeignKey("dbo.Universities", t => t.UniversityId, cascadeDelete: true)
+                .Index(t => t.UniversityId);
+            
+            CreateTable(
+                "dbo.Universities",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 255, storeType: "nvarchar"),
+                        Description = c.String(unicode: false),
+                        CityId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Cities", t => t.CityId, cascadeDelete: true)
+                .Index(t => t.CityId);
             
             CreateTable(
                 "dbo.Cities",
@@ -51,11 +64,8 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 255, storeType: "nvarchar"),
-                        Program_Id = c.Int(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Programs", t => t.Program_Id)
-                .Index(t => t.Program_Id);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Specialities",
@@ -76,47 +86,50 @@
                         DurationInYears = c.Int(nullable: false),
                         BudgetExamPoints = c.Int(),
                         BudgetPlacesCount = c.Int(),
-                        Program_Id = c.Int(),
+                        ProgramId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Programs", t => t.Program_Id)
-                .Index(t => t.Program_Id);
+                .ForeignKey("dbo.Programs", t => t.ProgramId, cascadeDelete: true)
+                .Index(t => t.ProgramId);
             
             CreateTable(
-                "dbo.Universities",
+                "dbo.ProgramsEgeSubjects",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 255, storeType: "nvarchar"),
-                        Description = c.String(unicode: false),
-                        CityId = c.Int(nullable: false),
+                        ProgramId = c.Int(nullable: false),
+                        SubjectId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Cities", t => t.CityId, cascadeDelete: true)
-                .Index(t => t.CityId);
+                .PrimaryKey(t => new { t.ProgramId, t.SubjectId })
+                .ForeignKey("dbo.Programs", t => t.ProgramId, cascadeDelete: true)
+                .ForeignKey("dbo.Subjects", t => t.SubjectId, cascadeDelete: true)
+                .Index(t => t.ProgramId)
+                .Index(t => t.SubjectId);
             
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Programs", "UniversityId", "dbo.Universities");
-            DropForeignKey("dbo.Universities", "CityId", "dbo.Cities");
-            DropForeignKey("dbo.Addresses", "University_Id", "dbo.Universities");
-            DropForeignKey("dbo.TrainingForms", "Program_Id", "dbo.Programs");
+            DropForeignKey("dbo.TrainingForms", "ProgramId", "dbo.Programs");
             DropForeignKey("dbo.Programs", "SpecialityId", "dbo.Specialities");
-            DropForeignKey("dbo.Subjects", "Program_Id", "dbo.Programs");
-            DropIndex("dbo.Universities", new[] { "CityId" });
-            DropIndex("dbo.TrainingForms", new[] { "Program_Id" });
-            DropIndex("dbo.Subjects", new[] { "Program_Id" });
+            DropForeignKey("dbo.ProgramsEgeSubjects", "SubjectId", "dbo.Subjects");
+            DropForeignKey("dbo.ProgramsEgeSubjects", "ProgramId", "dbo.Programs");
+            DropForeignKey("dbo.Universities", "CityId", "dbo.Cities");
+            DropForeignKey("dbo.Addresses", "UniversityId", "dbo.Universities");
+            DropIndex("dbo.ProgramsEgeSubjects", new[] { "SubjectId" });
+            DropIndex("dbo.ProgramsEgeSubjects", new[] { "ProgramId" });
+            DropIndex("dbo.TrainingForms", new[] { "ProgramId" });
             DropIndex("dbo.Programs", new[] { "SpecialityId" });
             DropIndex("dbo.Programs", new[] { "UniversityId" });
-            DropIndex("dbo.Addresses", new[] { "University_Id" });
-            DropTable("dbo.Universities");
+            DropIndex("dbo.Universities", new[] { "CityId" });
+            DropIndex("dbo.Addresses", new[] { "UniversityId" });
+            DropTable("dbo.ProgramsEgeSubjects");
             DropTable("dbo.TrainingForms");
             DropTable("dbo.Specialities");
             DropTable("dbo.Subjects");
             DropTable("dbo.Programs");
             DropTable("dbo.Cities");
+            DropTable("dbo.Universities");
             DropTable("dbo.Addresses");
         }
     }

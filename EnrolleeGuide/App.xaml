@@ -18,7 +18,7 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
             
-            <Style x:Key="ToolBarImage" TargetType="Image">
+            <Style x:Key="DataGridActionImage" TargetType="Image">
                 <Setter Property="Width" Value="15"/>
                 <Setter Property="Height" Value="15"/>
                 <Setter Property="Margin" Value="2"/>
@@ -28,10 +28,11 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            <Image x:Key="AddImage" Source="Resources/add.png" Style="{StaticResource ToolBarImage}" x:Shared="False" ToolTip="Добавить"/>
-            <Image x:Key="EditImage" Source="Resources/edit.png" Style="{StaticResource ToolBarImage}" x:Shared="False" ToolTip="Изменить"/>
-            <Image x:Key="DeleteImage" Source="Resources/delete.png" Style="{StaticResource ToolBarImage}" x:Shared="False" ToolTip="Удалить" />
-            <Image x:Key="SaveImage" Source="Resources/save.png" Style="{StaticResource ToolBarImage}" x:Shared="False" ToolTip="Сохранить" />
+            <Image x:Key="AddImage" Source="Resources/add.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Добавить"/>
+            <Image x:Key="EditImage" Source="Resources/edit.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Изменить"/>
+            <Image x:Key="DeleteImage" Source="Resources/delete.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Удалить" />
+            <Image x:Key="SaveImage" Source="Resources/save.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Сохранить" />
+            <Image x:Key="BookImage" Source="Resources/book.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Программы" />
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

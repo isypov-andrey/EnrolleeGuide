@@ -25,5 +25,19 @@ namespace Database
         {
 
         }
+
+        /// <summary>
+        /// Добавление дополнительной конфигурации при создании модели
+        /// </summary>
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Program>()
+                .HasMany(q => q.EgeSubjects)
+                .WithMany(q => q.Programs)
+                .Map(q => q.ToTable("ProgramsEgeSubjects").MapLeftKey("ProgramId").MapRightKey("SubjectId"));
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

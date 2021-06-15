@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities
 {
@@ -34,5 +35,11 @@ namespace Entities
         /// Количество бюджетных мест
         /// </summary>
         public int? BudgetPlacesCount { get; set; }
+
+        [Required]
+        public int ProgramId { get; set; }
+
+        [ForeignKey(nameof(ProgramId))]
+        public Program Program { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities
 {
     public class Address
     {
-
         [Key]
         public int Id { get; set; }
 
@@ -20,5 +20,14 @@ namespace Entities
         /// </summary>
         [MaxLength(20)]
         public string Phone { get; set; }
+
+        [Required]
+        public int UniversityId { get; set; }
+
+        /// <summary>
+        /// Университет
+        /// </summary>
+        [ForeignKey(nameof(UniversityId))]
+        public virtual University University { get; set; }
     }
 }

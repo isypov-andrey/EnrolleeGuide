@@ -84,14 +84,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\AddressModel.cs" />
+    <Compile Include="Models\ProgramModel.cs" />
     <Compile Include="Models\UniversityModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\SpecialityModel.cs" />
+    <Compile Include="Stores\ProgramsStore.cs" />
     <Compile Include="Stores\UniversitiesStore.cs" />
     <Compile Include="Stores\SpecialitiesStore.cs" />
     <Compile Include="Stores\SubjectsStore.cs" />
     <Compile Include="Stores\CitiesStore.cs" />
     <Compile Include="Stores\IStore.cs" />
+    <Compile Include="ViewModels\ProgramItemsViewModel.cs" />
     <Compile Include="ViewModels\UniversityItemsViewModel.cs" />
     <Compile Include="ViewModels\SubjectItemsViewModel.cs" />
     <Compile Include="ViewModels\SpecialityItemsViewModel.cs" />
@@ -216,6 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\book.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
