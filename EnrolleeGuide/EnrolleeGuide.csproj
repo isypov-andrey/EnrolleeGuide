@@ -92,6 +92,7 @@
     <Compile Include="Stores\SubjectsStore.cs" />
     <Compile Include="Stores\CitiesStore.cs" />
     <Compile Include="Stores\IStore.cs" />
+    <Compile Include="ViewModels\UniversityItemsViewModel.cs" />
     <Compile Include="ViewModels\SubjectItemsViewModel.cs" />
     <Compile Include="ViewModels\SpecialityItemsViewModel.cs" />
     <Compile Include="ViewModels\ItemsViewModelBase.cs" />

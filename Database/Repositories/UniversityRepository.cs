@@ -20,6 +20,7 @@ namespace Database.Repositories
         {
             return await _readContext.Universities
                 .AsNoTracking()
+                .Include(university => university.Addresses)
                 .FirstOrDefaultAsync(university => university.Id == id);
         }
 
@@ -30,14 +31,47 @@ namespace Database.Repositories
                 .ToListAsync();
         }
 
-        public async Task SaveAsync(University university)
+        public async Task SaveAsync(University changedUniversity)
         {
             using (var editContext = new DataContext())
             {
-                editContext.Entry(university)
-                    .State = university.Id == 0
-                    ? EntityState.Added
-                    : EntityState.Modified;
+                if (changedUniversity.Id == 0)
+                {
+                    editContext.Universities.Add(changedUniversity);
+                }
+                else
+                {
+                    var existsUniversity = await editContext.Universities
+                        .Include(university => university.Addresses)
+                        .FirstOrDefaultAsync(university => university.Id == changedUniversity.Id);
+
+                    existsUniversity.Name = changedUniversity.Name;
+                    existsUniversity.Description = changedUniversity.Description;
+                    existsUniversity.CityId = changedUniversity.CityId;
+
+                    var oldAddresses = existsUniversity.Addresses.ToDictionary(address => address.Id);
+                    if (changedUniversity.Addresses?.Any() == true)
+                    {
+                        foreach(var newAddress in changedUniversity.Addresses)
+                        {
+                            if (oldAddresses.TryGetValue(newAddress.Id, out var oldAddress))
+                            {
+                                oldAddresses.Remove(newAddress.Id);
+                                oldAddress.FullAddress = newAddress.FullAddress;
+                                oldAddress.Phone = newAddress.Phone;
+                            }
+                            else
+                            {
+                                existsUniversity.Addresses.Add(newAddress);
+                            }
+                        }
+                    }
+
+                    if (oldAddresses.Any())
+                    {
+                        editContext.Addresses.RemoveRange(oldAddresses.Values);
+                    }
+                }
 
                 await editContext.SaveChangesAsync();
             }

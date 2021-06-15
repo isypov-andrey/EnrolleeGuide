@@ -76,7 +76,7 @@ namespace EnrolleeGuide.ViewModels
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            await LoadDataAsync();
+            await OnNavigatedToImpl(navigationContext);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -89,6 +89,11 @@ namespace EnrolleeGuide.ViewModels
         }
 
         protected abstract string DeleteConfirmationMessage(TItem item);
+
+        protected virtual async Task OnNavigatedToImpl(NavigationContext navigationContext)
+        {
+            await LoadDataAsync();
+        }
 
         private void Create()
         {

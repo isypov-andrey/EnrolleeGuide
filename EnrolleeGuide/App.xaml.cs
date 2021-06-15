@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using Database;
-using Database.Repositories;
-using EnrolleeGuide.Stores;
-using EnrolleeGuide.Views;
+﻿using EnrolleeGuide.Views;
 using Prism.Ioc;
 using Prism.Unity;
+using System.Windows;
 
 namespace EnrolleeGuide
 {
@@ -24,6 +15,7 @@ namespace EnrolleeGuide
             containerRegistry.RegisterForNavigation<CityItemsView>();
             containerRegistry.RegisterForNavigation<SpecialityItemsView>();
             containerRegistry.RegisterForNavigation<SubjectItemsView>();
+            containerRegistry.RegisterForNavigation<UniversityItemsView>();
         }
 
         protected override Window CreateShell()

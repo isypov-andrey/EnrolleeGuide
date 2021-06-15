@@ -13,14 +13,8 @@ namespace EnrolleeGuide.Models
 
         public string Name
         {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                SetProperty(ref _name, value);
-            }
+            get => _name;
+            set => SetProperty(ref _name, value);
         }
 
         /// <summary>
@@ -33,20 +27,37 @@ namespace EnrolleeGuide.Models
         /// </summary>
         public string Description
         {
-            get
-            {
-                return _description;
-            }
-            set
-            {
-                SetProperty(ref _description, value);
-            }
+            get => _description;
+            set => SetProperty(ref _description, value);
         }
 
         /// <summary>
-        /// Адреса
+        /// <see cref="CityId"/>
         /// </summary>
-        public ObservableCollection<AddressModel> Addresses { get; set; } = new ObservableCollection<AddressModel>();
+        private int _cityId;
+
+        /// <summary>
+        /// Идентификатор города расположения
+        /// </summary>
+        public int CityId
+        {
+            get => _cityId;
+            set => SetProperty(ref _cityId, value);
+        }
+
+        /// <summary>
+        /// <see cref="Addresses"/>
+        /// </summary>
+        private ObservableCollection<AddressModel> _addresses = new ObservableCollection<AddressModel>();
+
+        /// <summary>
+        /// Идентификатор города расположения
+        /// </summary>
+        public ObservableCollection<AddressModel> Addresses
+        {
+            get => _addresses;
+            set => SetProperty(ref _addresses, value);
+        }
 
         public static UniversityModel GetFromDomain(University university)
         {
@@ -59,7 +70,8 @@ namespace EnrolleeGuide.Models
             {
                 Id = university.Id,
                 Name = university.Name,
-                Description = university.Description
+                Description = university.Description,
+                CityId = university.CityId
             };
             if (university.Addresses?.Any() == true)
             {
@@ -85,6 +97,7 @@ namespace EnrolleeGuide.Models
                 Id = Id,
                 Name = Name,
                 Description = Description,
+                CityId = CityId,
                 Addresses = Addresses.Select(
                         address => new Address
                         {
