@@ -62,12 +62,12 @@ namespace EnrolleeGuide.Models
         /// <summary>
         /// <see cref="TrainingForms"/>
         /// </summary>
-        private ObservableCollection<TrainingForm> _trainingForms = new ObservableCollection<TrainingForm>();
+        private ObservableCollection<TrainingFormModel> _trainingForms = new ObservableCollection<TrainingFormModel>();
 
         /// <summary>
         /// Формы обучения
         /// </summary>
-        public ObservableCollection<TrainingForm> TrainingForms
+        public ObservableCollection<TrainingFormModel> TrainingForms
         {
             get => _trainingForms;
             set => SetProperty(ref _trainingForms, value);
@@ -104,7 +104,9 @@ namespace EnrolleeGuide.Models
             };
             if (program.TrainingForms?.Any() == true)
             {
-                programModel.TrainingForms.AddRange(program.TrainingForms);
+                programModel.TrainingForms.AddRange(
+                    program.TrainingForms.Select(TrainingFormModel.GetFromDomain)
+                );
             }
             if (program.EgeSubjects?.Any() == true)
             {
@@ -125,6 +127,8 @@ namespace EnrolleeGuide.Models
                 Description = Description,
                 UniversityId = UniversityId,
                 SpecialityId = SpecialityId,
+                TrainingForms = TrainingForms.Select(form => form.ToDomain())
+                    .ToList(),
                 EgeSubjects = EgeSubjects.Select(subject => subject.ToDomain())
                     .ToList()
             };

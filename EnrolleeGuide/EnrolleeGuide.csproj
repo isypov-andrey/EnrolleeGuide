@@ -88,6 +88,7 @@
     <Compile Include="Models\SubjectForSelection.cs" />
     <Compile Include="Models\ToggleListItem.cs" />
     <Compile Include="Models\UniversityCriteria.cs" />
+    <Compile Include="Models\TrainingFormModel.cs" />
     <Compile Include="Models\UniversityModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\SpecialityModel.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Stores\CitiesStore.cs" />
     <Compile Include="Stores\IStore.cs" />
     <Compile Include="ViewModels\ProgramItemsViewModel.cs" />
+    <Compile Include="ViewModels\TrainingFormTypeRecord.cs" />
     <Compile Include="ViewModels\UniversityItemsViewModel.cs" />
     <Compile Include="ViewModels\SubjectItemsViewModel.cs" />
     <Compile Include="ViewModels\SpecialityItemsViewModel.cs" />
@@ -225,7 +227,22 @@
     <Resource Include="Resources\add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\book.png" />
+    <Resource Include="Resources\city.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\university.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\subject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\speciality.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\program.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\back.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

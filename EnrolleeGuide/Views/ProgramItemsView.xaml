@@ -1,24 +1,33 @@
 ﻿<UserControl x:Class="EnrolleeGuide.Views.ProgramItemsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:EnrolleeGuide"
-             xmlns:views="clr-namespace:EnrolleeGuide.Views"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              prism:ViewModelLocator.AutoWireViewModel="True"
              Name="ItemsControl"
              mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800">
+             d:DesignHeight="600"
+             d:DesignWidth="1300">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <DockPanel Margin="0,0,2,0" Background="White" >
         <StackPanel Height="30" DockPanel.Dock="Top" Orientation="Horizontal" Margin="10">
-            <Button Command="{Binding BackCommand}" Padding="5" Content="&lt;- Вернуться к выбору вуза"/>
+            <Button Command="{Binding BackToUniversitiesCommand}" Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <StaticResource ResourceKey="BackToUniversitiesImage"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Text="Вернуться к выбору вуза"/>
+                </Grid>
+            </Button>
             <TextBlock Text="Программы университета: " Margin="10,0"/>
-            <TextBlock Text="Московский государственный университет" FontWeight="Bold"/>
+            <TextBlock Text="{Binding University.Name}" FontWeight="Bold"/>
         </StackPanel>
         <ToolBar Height="30" DockPanel.Dock="Top">
             <Button Command="{Binding CreateCommand}">
@@ -34,7 +43,13 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Items}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid x:Name="ItemsGrid" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Items}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.InputBindings>
+                    <MouseBinding
+                        MouseAction="LeftDoubleClick"
+                        CommandParameter="{Binding Path=SelectedItem, ElementName=ItemsGrid}"
+                        Command="{Binding Path=DataContext.SelectCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=DataGrid}}"/>
+                </DataGrid.InputBindings>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" Width="*" />
                     <DataGridTemplateColumn Width="Auto">
@@ -96,7 +111,8 @@
                         <TextBlock Grid.Column="0">Наименование:</TextBlock>
                         <TextBox Grid.Column="1" Text="{Binding SelectedItem.Name}"></TextBox>
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">Описание:</TextBlock>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Description}" Height="60" Margin="0,10,0,0" VerticalAlignment="Stretch"></TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Description}" TextWrapping="Wrap" AcceptsReturn="True"
+                                 HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MinLines="5" MaxLines="5" Margin="0,10,0,0" VerticalAlignment="Stretch"></TextBox>
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">Специальность:</TextBlock>
                         <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Specialities}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedItem.SpecialityId}" Margin="0,10,0,0" VerticalAlignment="Stretch"></ComboBox>
                         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0">Предметы ЕГЭ:</TextBlock>
@@ -109,13 +125,27 @@
                         </ListBox>
                         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
                             <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,5">Формы обучения:</TextBlock>
-                            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding SelectedItem.TrainingForms}" Height="100">
+                            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding SelectedItem.TrainingForms}" Height="200">
                                 <DataGrid.Columns>
-                                    <DataGridComboBoxColumn ClipboardContentBinding="{x:Null}" Header="Тип" SelectedValueBinding="{x:Null}" SelectedItemBinding="{x:Null}" TextBinding="{x:Null}"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Длительность"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Стоимость"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Проходной балл"/>
-                                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Бюджетных мест"/>
+                                    <DataGridComboBoxColumn Header="Тип" SelectedValueBinding="{Binding Type}"
+                                                            SelectedValuePath="Value"
+                                                            DisplayMemberPath="Text"
+                                                            Width="150">
+                                        <DataGridComboBoxColumn.ElementStyle>
+                                            <Style TargetType="{x:Type ComboBox}">
+                                                <Setter Property="ItemsSource" Value="{Binding Path=DataContext.TrainingFormsTypes, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                            </Style>
+                                        </DataGridComboBoxColumn.ElementStyle>
+                                        <DataGridComboBoxColumn.EditingElementStyle>
+                                            <Style TargetType="{x:Type ComboBox}">
+                                                <Setter Property="ItemsSource" Value="{Binding Path=DataContext.TrainingFormsTypes, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                            </Style>
+                                        </DataGridComboBoxColumn.EditingElementStyle>
+                                    </DataGridComboBoxColumn>
+                                    <DataGridTextColumn Binding="{Binding DurationInYears}" Header="Длительность" Width="100"/>
+                                    <DataGridTextColumn Binding="{Binding Price}" Header="Стоимость"  Width="120"/>
+                                    <DataGridTextColumn Binding="{Binding BudgetExamPoints}" Header="Проходной балл" Width="120"/>
+                                    <DataGridTextColumn Binding="{Binding BudgetPlacesCount}" Header="Бюджетных мест" Width="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>

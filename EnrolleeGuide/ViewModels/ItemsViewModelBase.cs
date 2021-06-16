@@ -11,7 +11,7 @@ namespace EnrolleeGuide.ViewModels
 {
     public abstract class ItemsViewModelBase<TItem> : BindableBase, INavigationAware where TItem : new()
     {
-        private readonly IStore<TItem> _store;
+        protected readonly IStore<TItem> _store;
 
 
         private string _title;
@@ -92,19 +92,21 @@ namespace EnrolleeGuide.ViewModels
 
         protected virtual async Task OnNavigatedToImpl(NavigationContext navigationContext)
         {
-            await LoadDataAsync();
+            SelectedItem = default;
+
+            await LoadItemsAsync();
         }
 
-        private void Create()
-        {
-            SelectedItem = new TItem();
-        }
-
-        private async Task LoadDataAsync()
+        protected virtual async Task LoadItemsAsync()
         {
             var items = await _store.GetAllAsync();
 
             Items = new ObservableCollection<TItem>(items);
+        }
+
+        protected virtual void Create()
+        {
+            SelectedItem = new TItem();
         }
 
         private async Task LoadItemAsync(TItem itemModel)
@@ -120,7 +122,7 @@ namespace EnrolleeGuide.ViewModels
 
             SelectedItem = default;
 
-            await LoadDataAsync();
+            await LoadItemsAsync();
         }
 
         private async Task DeleteAsync(TItem item)
@@ -140,7 +142,7 @@ namespace EnrolleeGuide.ViewModels
 
             SelectedItem = default;
 
-            await LoadDataAsync();
+            await LoadItemsAsync();
         }
     }
 }

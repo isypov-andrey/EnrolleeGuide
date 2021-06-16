@@ -29,6 +29,14 @@ namespace EnrolleeGuide.Stores
                 .ToList();
         }
 
+        public async Task<ICollection<ProgramModel>> GetByUniversityAsync(UniversityModel universityModel)
+        {
+            var programs = await _repository.GetAllAsync();
+
+            return programs.Select(ProgramModel.GetFromDomain)
+                .ToList();
+        }
+
         public async Task SaveAsync(ProgramModel itemModel)
         {
             await _repository.SaveAsync(itemModel.ToDomain());
