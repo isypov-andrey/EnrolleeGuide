@@ -4,13 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EnrolleeGuide.Views"
-             mc:Ignorable="d" Background="White" Height="572" Width="1044.5">
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" Background="White" d:DesignHeight="572" d:DesignWidth="1060.5">
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Padding="10,12,10,0"><Run Text="Город обучения"/><LineBreak/><Run/></TextBlock>
-                <ComboBox x:Name="citiesComboBox" Width="198" Margin="5"/>
-                <ListBox BorderBrush="{x:Null}">
+                <TextBlock Padding="10,0,5,0">Город обучения</TextBlock>
+                <ComboBox x:Name="citiesComboBox" ItemsSource="{Binding Cities}" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedValue="{Binding Criteria.CityId}" Width="198" Margin="5"/>
+                <ListBox BorderBrush="{x:Null}" ItemsSource="{Binding TrainingForms}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
@@ -18,28 +20,25 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <ToggleButton Content="Очно" Height="36" Width="94.5"/>
+                            <ToggleButton Content="{Binding Name}" IsChecked="{Binding Checked}" Height="36" Width="94.5"/>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                    <ListItem/>
-                    <ListItem/>
-                    <ListItem/>
                 </ListBox>
-                <TextBlock Padding="10,12,10,0"><Run Text="Специальность"/><LineBreak/><Run/></TextBlock>
-                <ComboBox x:Name="specialityComboBox" Width="288" Margin="5"/>
+                <TextBlock Padding="10,0,5,0">Специальность</TextBlock>
+                <ComboBox x:Name="specialityComboBox" ItemsSource="{Binding Specialities}" DisplayMemberPath="Name" SelectedValue="{Binding Criteria.SpecialityId}" SelectedValuePath="Id" Width="288" Margin="5"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Padding="10,11,10,0">Поиск</TextBlock>
-                <TextBox Width="392" Height="31.46" AutomationProperties.HelpText="Поиск"></TextBox>
-                <TextBlock Padding="10,12,10,0"><Run Text="Предметы ЕГЭ"/><LineBreak/><Run/></TextBlock>
-                <ComboBox x:Name="subjectsComboBox" Width="198" Margin="5">
+                <TextBlock Padding="5,0,5,0">Поиск</TextBlock>
+                <TextBox Width="392" AutomationProperties.HelpText="Поиск" Text="{Binding Criteria.Query, Mode=TwoWay}"></TextBox>
+                <TextBlock Padding="10,0,5,0">Предметы ЕГЭ</TextBlock>
+                <ComboBox x:Name="subjectsComboBox" ItemsSource="{Binding Subjects}" Width="198" Margin="5">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox Name="chkCountry" Width="220" Content="{Binding Country_Name}" IsChecked="{Binding Check_Status}" CommandParameter="{Binding Country_ID}" />
+                            <CheckBox Width="220" Content="{Binding Name}" IsChecked="{Binding Checked}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Button x:Name="button" Content="Поиск" Width="75" Background="#FF008BFF" Margin="20,0,0,0" Foreground="White" FontSize="16"/>
+                <Button x:Name="button" Content="Поиск" Width="75" Background="#FF008BFF" Margin="20,0,0,0" Foreground="White" FontSize="16" Command="{Binding SearchCommand}" />
             </StackPanel>
         </StackPanel>
         <Grid>

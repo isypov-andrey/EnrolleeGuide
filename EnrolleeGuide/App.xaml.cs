@@ -16,6 +16,7 @@ namespace EnrolleeGuide
             containerRegistry.RegisterForNavigation<SpecialityItemsView>();
             containerRegistry.RegisterForNavigation<SubjectItemsView>();
             containerRegistry.RegisterForNavigation<UniversityItemsView>();
+            containerRegistry.RegisterForNavigation<UniversitiesMainView>();
         }
 
         protected override Window CreateShell()

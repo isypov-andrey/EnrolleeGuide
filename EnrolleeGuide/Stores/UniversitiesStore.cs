@@ -1,6 +1,7 @@
 ﻿using Database.Repositories;
 using EnrolleeGuide.Models;
 using Entities;
+using Entities.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,11 @@ namespace EnrolleeGuide.Stores
         public async Task DeleteAsync(UniversityModel itemModel)
         {
             await _repository.DeleteAsync(itemModel.Id);
+        }
+
+        public async Task<ICollection<UniversityForList>> GetByCriteria(UniversityCriteria criteria)
+        {
+            return await _repository.GetForList(criteria.Query, criteria.CityId, criteria.SpecialityId, criteria.SubjectIds, criteria.TrainingFormTypes);
         }
     }
 }

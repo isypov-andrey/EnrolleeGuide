@@ -85,6 +85,9 @@
     </ApplicationDefinition>
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\ProgramModel.cs" />
+    <Compile Include="Models\SubjectForSelection.cs" />
+    <Compile Include="Models\ToggleListItem.cs" />
+    <Compile Include="Models\UniversityCriteria.cs" />
     <Compile Include="Models\UniversityModel.cs" />
     <Compile Include="Models\SubjectModel.cs" />
     <Compile Include="Models\SpecialityModel.cs" />
@@ -107,6 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ViewModels\UniversitiesMainViewModel.cs" />
     <Compile Include="Views\ProgramItemsView.xaml.cs">
       <DependentUpon>ProgramItemsView.xaml</DependentUpon>
     </Compile>

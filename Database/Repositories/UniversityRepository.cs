@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Entities.Domain;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -85,6 +86,30 @@ namespace Database.Repositories
 
                 await editContext.SaveChangesAsync();
             }
+        }
+
+        public async Task<ICollection<UniversityForList>> GetForList(string query, int cityId, int specialityId, ICollection<int> subjectIds, ICollection<TrainingFormType> TrainingFormTypes)
+        {
+            var res = _readContext.TrainingForms
+                .AsNoTracking()
+                .GroupBy(trainingForm => trainingForm.Program.University)
+                .Select(
+                    programs => programs.SelectMany(
+                            p => p.TrainingForms
+                        )
+                        .Select(
+                            q => new UniversityForList
+                            {
+                                Id = programs.Key.Id,
+                                Name = programs.Key.Name,
+                                BudgetPlacesCount = programs.SelectMany(p => p.TrainingForms)
+                            }
+                        )
+                        .Sum(t => t.BudgetPlacesCount)
+                );
+
+
+            return null;
         }
     }
 }
