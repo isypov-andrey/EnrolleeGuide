@@ -58,12 +58,22 @@ namespace EnrolleeGuide.ViewModels
             private set { SetProperty(ref _universities, value); }
         }
 
+        public UniversityForList SelectedUniversity { get; set; }
+
+        private ICollection<ProgramForList> _programs;
+        public ICollection<ProgramForList> Programs
+        {
+            get { return _programs; }
+            private set { SetProperty(ref _programs, value); }
+        }
+
         private CitiesStore citiesStore;
         private SpecialitiesStore specialitiesStore;
         private SubjectsStore subjectsStore;
         private UniversitiesStore universitiesStore;
 
         public DelegateCommand SearchCommand { get; private set; }
+        public DelegateCommand UniversitySelectedCommand { get; private set; }
 
         public UniversitiesMainViewModel(CitiesStore citiesStore, SpecialitiesStore specialitiesStore, SubjectsStore subjectsStore, UniversitiesStore universitiesStore)
         {
@@ -72,7 +82,17 @@ namespace EnrolleeGuide.ViewModels
             this.subjectsStore = subjectsStore;
             this.universitiesStore = universitiesStore;
             SearchCommand = new DelegateCommand(LoadDataAsync);
+            UniversitySelectedCommand = new DelegateCommand(OnUniversitySelected);
             Criteria = new UniversityCriteria();
+        }
+
+        private void OnUniversitySelected()
+        {
+            if (SelectedUniversity == null)
+            {
+                return;
+            }
+            LoadProgramsAsync(SelectedUniversity.Id);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -104,12 +124,21 @@ namespace EnrolleeGuide.ViewModels
             };
         }
 
-        private async void LoadDataAsync()
+        private UniversityCriteria GetFilledCriteria()
         {
             Criteria.SubjectIds = Subjects.Where(subject => subject.Checked).Select(subject => subject.Id).ToList();
             Criteria.TrainingFormTypes = TrainingForms.Where(form => form.Checked).Select(form => form.Value).ToList();
+            return Criteria;
+        }
 
-            Universities = await universitiesStore.GetByCriteria(Criteria);
+        private async void LoadDataAsync()
+        {
+            Universities = await universitiesStore.GetByCriteria(GetFilledCriteria());
+        }
+
+        private async void LoadProgramsAsync(int universityId)
+        {
+            Programs = await universitiesStore.GetProgramsByCriteria(universityId, GetFilledCriteria());
         }
     }
 }

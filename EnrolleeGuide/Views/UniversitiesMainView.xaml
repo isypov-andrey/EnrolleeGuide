@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:EnrolleeGuide.Views"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
@@ -44,21 +45,30 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ListBox Grid.Column="0" ItemsSource="{Binding Universities}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox Grid.Column="0" SelectedItem="{Binding SelectedUniversity}" ItemsSource="{Binding Universities}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <prism:InvokeCommandAction Command="{Binding UniversitySelectedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <local:UniversityListItemView Padding="10,10,25,10" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth}"/>
+                        <Border Padding="0,0,30,0" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth}">
+                            <local:UniversityListItemView Margin="10,5,10,5" />
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <GridSplitter Grid.Column="1" ResizeDirection="Columns" Margin="0,0,400,0" Grid.ColumnSpan="2" Width="5"></GridSplitter>
-            <ListBox Grid.Column="2">
+            <GridSplitter Grid.Column="1" ResizeDirection="Columns"></GridSplitter>
+            <ListBox Grid.Column="2" ItemsSource="{Binding Programs}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <local:ProgramListItemView />
+                        <Border Padding="0,0,30,0" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth}">
+                            <local:ProgramListItemView Margin="10,5,10,5"  />
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
