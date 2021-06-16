@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EnrolleeGuide.Views"
              mc:Ignorable="d" 
-             d:DesignWidth="500" Background="White" >
+             d:DesignWidth="500" Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
@@ -18,22 +18,22 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-            <TextBlock Text="Московский государственный университет" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" Padding="5" Margin="5,0" Foreground="Black" />
+            <TextBlock Text="{Binding Name}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" Padding="5" Margin="5,0" Foreground="Black" />
             <Expander Header="Описание" Margin="0,10">
-                <TextBlock Text="Главный классический университет России, центр отечественной науки и культуры. Для абитуриентов МГУ открыты 40 факультетов, здесь можно получить образование по всем основным классическим направлениям. Наиболее популярны и, как следствие, труднодоступны юридический и экономический факультеты. Обучение ведется по интегрированной шестилетней программе. В состав МГУ входят 7 филиалов, а также совместный с Китаем университет МГУ-ППИ в Шэньчжэне." TextWrapping="Wrap" Padding="5" Margin="5,0" Foreground="#FF020202" FontFamily="Palatino Linotype" />
+                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Padding="5" Margin="5,0" Foreground="#FF020202" FontFamily="Palatino Linotype" />
             </Expander>
         </StackPanel>
         <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="2" Fill="#FFD1D1D1" Margin="10,0" />
         <StackPanel Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
-            <TextBlock Text="80" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
+            <TextBlock Text="{Binding BudgetExamPointsFrom}" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
             <TextBlock Text="Проходной балл" HorizontalAlignment="Center" Foreground="#FF999999" />
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,5">
-            <TextBlock Text="20" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
+            <TextBlock Text="{Binding BudgetPlacesCount}" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
             <TextBlock Text="Бюджетных мест" HorizontalAlignment="Center" Foreground="#FF999999" />
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Margin="0,5">
-            <TextBlock Text="220 000" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
+            <TextBlock Text="{Binding PriceFrom}" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" />
             <TextBlock Text="Стоимость" HorizontalAlignment="Center" Foreground="#FF999999" Margin="0,5" />
         </StackPanel>
     </Grid>

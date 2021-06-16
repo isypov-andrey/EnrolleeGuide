@@ -94,22 +94,20 @@ namespace Database.Repositories
                 .AsNoTracking()
                 .GroupBy(trainingForm => trainingForm.Program.University)
                 .Select(
-                    programs => programs.SelectMany(
-                            p => p.TrainingForms
-                        )
-                        .Select(
-                            q => new UniversityForList
-                            {
-                                Id = programs.Key.Id,
-                                Name = programs.Key.Name,
-                                BudgetPlacesCount = programs.SelectMany(p => p.TrainingForms)
-                            }
-                        )
-                        .Sum(t => t.BudgetPlacesCount)
+                    q => new UniversityForList
+                    {
+                        Id = q.Key.Id,
+                        Name = q.Key.Name,
+                        Description = q.Key.Description,
+                        BudgetPlacesCount = q.Sum(trainingForm => trainingForm.BudgetPlacesCount ?? 0),
+                        PriceFrom = q.Min(trainingForm => trainingForm.Price ?? Decimal.MaxValue),
+                        BudgetExamPointsFrom = q.Min(trainingForm => trainingForm.BudgetExamPoints ?? int.MaxValue),
+                        ProgramsCount = q.Select(trainingForm => trainingForm.Program.Id).Distinct().Count()
+                    }
                 );
 
 
-            return null;
+            return await res.ToListAsync();
         }
     }
 }

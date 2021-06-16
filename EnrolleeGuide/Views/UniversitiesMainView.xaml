@@ -47,10 +47,10 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ListBox Grid.Column="0" Grid.ColumnSpan="3">
+            <ListBox Grid.Column="0" ItemsSource="{Binding Universities}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <local:UniversityListItemView />
+                        <local:UniversityListItemView Padding="10,10,25,10" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=ActualWidth}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
