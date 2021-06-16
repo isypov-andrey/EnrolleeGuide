@@ -99,10 +99,35 @@ namespace Database.Repositories
                         Id = q.Key.Id,
                         Name = q.Key.Name,
                         Description = q.Key.Description,
-                        BudgetPlacesCount = q.Sum(trainingForm => trainingForm.BudgetPlacesCount ?? 0),
-                        PriceFrom = q.Min(trainingForm => trainingForm.Price ?? Decimal.MaxValue),
-                        BudgetExamPointsFrom = q.Min(trainingForm => trainingForm.BudgetExamPoints ?? int.MaxValue),
+                        BudgetPlacesCount = q.Sum(trainingForm => trainingForm.BudgetPlacesCount),
+                        PriceFrom = q.Min(trainingForm => trainingForm.Price),
+                        BudgetExamPointsFrom = q.Min(trainingForm => trainingForm.BudgetExamPoints),
                         ProgramsCount = q.Select(trainingForm => trainingForm.Program.Id).Distinct().Count()
+                    }
+                );
+
+
+            return await res.ToListAsync();
+        }
+
+        public async Task<ICollection<ProgramForList>> GetProgramsForList(int universityId, string query, int cityId, int specialityId, ICollection<int> subjectIds, ICollection<TrainingFormType> TrainingFormTypes)
+        {
+            var res = _readContext.TrainingForms
+                .AsNoTracking()
+                .Where(trainingForm => trainingForm.Program.UniversityId == universityId)
+                .GroupBy(trainingForm => trainingForm.Program)
+                .Select(
+                    q => new ProgramForList
+                    {
+                        Id = q.Key.Id,
+                        Name = q.Key.Name,
+                        Description = q.Key.Description,
+                        Subjects = q.Key.EgeSubjects.Select(egeSubject => egeSubject.Name),
+                        TrainingForms = q.Select(trainingForm => trainingForm.Type),
+                        BudgetPlacesCount = q.Sum(trainingForm => trainingForm.BudgetPlacesCount),
+                        Price = q.Max(trainingForm => trainingForm.Price),
+                        BudgetExamPoints = q.Max(trainingForm => trainingForm.BudgetExamPoints),
+                        DurationInYears = q.Max(trainingForm => trainingForm.DurationInYears)
                     }
                 );
 

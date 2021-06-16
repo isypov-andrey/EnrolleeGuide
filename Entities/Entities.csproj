@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="City.cs" />
+    <Compile Include="Domain\ProgramForList.cs" />
     <Compile Include="Domain\UniversityForList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

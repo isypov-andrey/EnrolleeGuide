@@ -46,5 +46,10 @@ namespace EnrolleeGuide.Stores
         {
             return await _repository.GetForList(criteria.Query, criteria.CityId, criteria.SpecialityId, criteria.SubjectIds, criteria.TrainingFormTypes);
         }
+
+        public async Task<ICollection<ProgramForList>> GetProgramsByCriteria(int universityId, UniversityCriteria criteria)
+        {
+            return await _repository.GetProgramsForList(universityId, criteria.Query, criteria.CityId, criteria.SpecialityId, criteria.SubjectIds, criteria.TrainingFormTypes);
+        }
     }
 }
