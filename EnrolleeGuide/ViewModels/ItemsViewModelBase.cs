@@ -109,6 +109,11 @@ namespace EnrolleeGuide.ViewModels
             SelectedItem = new TItem();
         }
 
+        protected virtual void BeforeSave(TItem item)
+        {
+
+        }
+
         private async Task LoadItemAsync(TItem itemModel)
         {
             var loadedItem = await _store.GetAsync(itemModel);
@@ -118,6 +123,8 @@ namespace EnrolleeGuide.ViewModels
 
         private async Task SaveAsync(TItem item)
         {
+            BeforeSave(item);
+
             await _store.SaveAsync(item);
 
             SelectedItem = default;

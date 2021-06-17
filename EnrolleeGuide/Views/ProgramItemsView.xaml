@@ -109,20 +109,20 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0">Наименование:</TextBlock>
-                        <TextBox Grid.Column="1" Text="{Binding SelectedItem.Name}"></TextBox>
+                        <TextBox Grid.Column="1" Text="{Binding SelectedItem.Name}" Margin="0 5 0 5"></TextBox>
                         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">Описание:</TextBlock>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedItem.Description}" TextWrapping="Wrap" AcceptsReturn="True"
-                                 HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MinLines="5" MaxLines="5" Margin="0,10,0,0" VerticalAlignment="Stretch"></TextBox>
+                                 HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MinLines="5" MaxLines="5" VerticalAlignment="Stretch" Margin="0 5 0 5"></TextBox>
                         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">Специальность:</TextBlock>
-                        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Specialities}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedItem.SpecialityId}" Margin="0,10,0,0" VerticalAlignment="Stretch"></ComboBox>
+                        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Specialities}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectedItem.SpecialityId}" VerticalAlignment="Stretch" Margin="0 5 0 5"></ComboBox>
                         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0">Предметы ЕГЭ:</TextBlock>
-                        <ListBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Subjects}" Height="100" Margin="0,10,0,0">
-                            <ListBox.ItemTemplate>
+                        <ComboBox Grid.Row="3" Grid.Column="1" x:Name="SubjectsComboBox" ItemsSource="{Binding Subjects}" Margin="0 5 0 5">
+                            <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding Checked}" />
+                                    <CheckBox Width="220" Content="{Binding Name}" IsChecked="{Binding Checked}"/>
                                 </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
                             <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,5">Формы обучения:</TextBlock>
                             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding SelectedItem.TrainingForms}" Height="200">
