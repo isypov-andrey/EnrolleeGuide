@@ -1,9 +1,8 @@
 ﻿using Entities;
-using Prism.Mvvm;
 
 namespace EnrolleeGuide.Models
 {
-    public class TrainingFormModel : BindableBase
+    public class TrainingFormModel : ValidatableModel
     {
         public int Id { get; set; }
 
@@ -106,6 +105,26 @@ namespace EnrolleeGuide.Models
                 BudgetExamPoints = BudgetExamPoints,
                 BudgetPlacesCount = BudgetPlacesCount
             };
+        }
+
+        protected override string Validate(string columnName)
+        {
+            var error = string.Empty;
+            switch (columnName)
+            {
+                case nameof(Type):
+                    if (Type == default)
+                    {
+                        error = "Обязательное поле";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            HasErrors = error != string.Empty;
+
+            return error;
         }
     }
 }

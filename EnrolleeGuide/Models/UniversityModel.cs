@@ -1,11 +1,10 @@
 ﻿using Entities;
-using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace EnrolleeGuide.Models
 {
-    public class UniversityModel : BindableBase
+    public class UniversityModel : ValidatableModel
     {
         public int Id { get; set; }
 
@@ -94,6 +93,31 @@ namespace EnrolleeGuide.Models
                 Addresses = Addresses.Select(address => address.ToDomain())
                     .ToList()
             };
+        }
+
+        protected override string Validate(string columnName)
+        {
+            var error = string.Empty;
+
+            switch (columnName)
+            {
+                case nameof(Name):
+                    if (string.IsNullOrWhiteSpace(Name))
+                    {
+                        error = "Обязательное поле";
+                    }
+                    break;
+                case nameof(CityId):
+                    if (CityId == 0)
+                    {
+                        error = "Обязательное поле";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return error;
         }
     }
 }

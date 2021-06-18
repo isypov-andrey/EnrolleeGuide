@@ -1,9 +1,8 @@
 ﻿using Entities;
-using Prism.Mvvm;
 
 namespace EnrolleeGuide.Models
 {
-    public class SpecialityModel : BindableBase
+    public class SpecialityModel : ValidatableModel
     {
         public int Id { get; set; }
 
@@ -42,6 +41,26 @@ namespace EnrolleeGuide.Models
                 Id = Id,
                 Name = Name
             };
+        }
+
+        protected override string Validate(string columnName)
+        {
+            var error = string.Empty;
+            switch (columnName)
+            {
+                case nameof(Name):
+                    if (string.IsNullOrWhiteSpace(Name))
+                    {
+                        error = "Обязательное поле";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            HasErrors = error != string.Empty;
+
+            return error;
         }
     }
 }

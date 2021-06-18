@@ -48,6 +48,13 @@ namespace Database.Repositories
                 if (changedProgram.Id == 0)
                 {
                     editContext.Programs.Add(changedProgram);
+                    if (changedProgram.EgeSubjects?.Any() == true)
+                    {
+                        foreach (var newSubject in changedProgram.EgeSubjects)
+                        {
+                            editContext.Entry(newSubject).State = EntityState.Unchanged;
+                        }
+                    }
                 }
                 else
                 {
@@ -72,6 +79,7 @@ namespace Database.Repositories
                             else
                             {
                                 existsProgram.EgeSubjects.Add(newSubject);
+                                editContext.Entry(newSubject).State = EntityState.Unchanged;
                             }
                         }
                     }

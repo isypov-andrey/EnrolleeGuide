@@ -1,9 +1,8 @@
 ﻿using Entities;
-using Prism.Mvvm;
 
 namespace EnrolleeGuide.Models
 {
-    public class AddressModel : BindableBase
+    public class AddressModel : ValidatableModel
     {
         public int Id { get; set; }
 
@@ -58,6 +57,26 @@ namespace EnrolleeGuide.Models
                 FullAddress = FullAddress,
                 Phone = Phone
             };
+        }
+
+        protected override string Validate(string columnName)
+        {
+            var error = string.Empty;
+            switch (columnName)
+            {
+                case nameof(FullAddress):
+                    if (string.IsNullOrWhiteSpace(FullAddress))
+                    {
+                        error = "Обязательное поле";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            HasErrors = error != string.Empty;
+
+            return error;
         }
     }
 }

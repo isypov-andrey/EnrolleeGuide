@@ -1,9 +1,8 @@
 ﻿using Entities;
-using Prism.Mvvm;
 
 namespace EnrolleeGuide.Models
 {
-    public class CityModel : BindableBase
+    public class CityModel : ValidatableModel
     {
         public int Id { get; set; }
 
@@ -11,14 +10,8 @@ namespace EnrolleeGuide.Models
 
         public string Name
         {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                SetProperty(ref _name, value);
-            }
+            get => _name;
+            set => SetProperty(ref _name, value);
         }
 
         public static CityModel GetFromDomain(City city)
@@ -42,6 +35,26 @@ namespace EnrolleeGuide.Models
                 Id = Id,
                 Name = Name
             };
+        }
+
+        protected override string Validate(string columnName)
+        {
+            var error = string.Empty;
+            switch (columnName)
+            {
+                case nameof(Name):
+                    if (string.IsNullOrWhiteSpace(Name))
+                    {
+                        error = "Обязательное поле";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            HasErrors = error != string.Empty;
+
+            return error;
         }
     }
 }

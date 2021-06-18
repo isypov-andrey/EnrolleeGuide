@@ -1,11 +1,10 @@
 ﻿using Entities;
-using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace EnrolleeGuide.Models
 {
-    public class ProgramModel : BindableBase
+    public class ProgramModel : ValidatableModel
     {
         public int Id { get; set; }
 
@@ -132,6 +131,32 @@ namespace EnrolleeGuide.Models
                 EgeSubjects = EgeSubjects.Select(subject => subject.ToDomain())
                     .ToList()
             };
+        }
+
+        protected override string Validate(string columnName)
+        {
+            var error = string.Empty;
+            switch (columnName)
+            {
+                case nameof(Name):
+                    if (string.IsNullOrWhiteSpace(Name))
+                    {
+                        error = "Обязательное поле";
+                    }
+                    break;
+                case nameof(SpecialityId):
+                    if (SpecialityId == 0)
+                    {
+                        error = "Обязательное поле";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            HasErrors = error != string.Empty;
+
+            return error;
         }
     }
 }
