@@ -281,5 +281,8 @@
   <ItemGroup>
     <Resource Include="iconfinder_4212915_education_graduate_learning_student_icon_512px.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\clear.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

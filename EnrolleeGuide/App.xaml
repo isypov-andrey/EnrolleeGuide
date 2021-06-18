@@ -46,6 +46,7 @@
             <Image x:Key="DeleteImage" Source="Resources/delete.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Удалить" />
             <Image x:Key="SaveImage" Source="Resources/save.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Сохранить" />
             <Image x:Key="ProgramImage" Source="Resources/program.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Программы" />
+            <Image x:Key="ClearImage" Source="Resources/clear.png" Style="{StaticResource DataGridActionImage}" x:Shared="False" ToolTip="Очистить" />
 
             <Style x:Key="ButtonsImage" TargetType="Image">
                 <Setter Property="Width" Value="15"/>
