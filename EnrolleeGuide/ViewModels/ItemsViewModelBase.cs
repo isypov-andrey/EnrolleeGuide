@@ -1,4 +1,5 @@
-﻿using EnrolleeGuide.Stores;
+﻿using EnrolleeGuide.Models;
+using EnrolleeGuide.Stores;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -9,7 +10,7 @@ using System.Windows;
 
 namespace EnrolleeGuide.ViewModels
 {
-    public abstract class ItemsViewModelBase<TItem> : BindableBase, INavigationAware where TItem : new()
+    public abstract class ItemsViewModelBase<TItem> : BindableBase, INavigationAware where TItem : ValidatableModel, new()
     {
         protected readonly IStore<TItem> _store;
 
@@ -49,6 +50,18 @@ namespace EnrolleeGuide.ViewModels
                 if (SetProperty(ref _selectedItem, value))
                 {
                     RaisePropertyChanged(nameof(IsItemSelected));
+
+                    if (value != null)
+                    {
+                        value.PropertyChanged += (sender, args) =>
+                        {
+                            if (args.PropertyName == nameof(value.HasErrors))
+                            {
+                                SaveCommand.RaiseCanExecuteChanged();
+                            }
+                        };
+                        SaveCommand.RaiseCanExecuteChanged();
+                    }
                 }
             }
         }
@@ -70,7 +83,7 @@ namespace EnrolleeGuide.ViewModels
 
             SelectCommand = new DelegateCommand<TItem>(async item => await LoadItemAsync(item));
             CreateCommand = new DelegateCommand(Create);
-            SaveCommand = new DelegateCommand<TItem>(async item => await SaveAsync(item));
+            SaveCommand = new DelegateCommand<TItem>(async item => await SaveAsync(item), item => item != null && !item.HasErrors);
             DeleteCommand = new DelegateCommand<TItem>(async item => await DeleteAsync(item));
         }
 
