@@ -74,6 +74,7 @@ namespace EnrolleeGuide.ViewModels
 
         public DelegateCommand SearchCommand { get; private set; }
         public DelegateCommand UniversitySelectedCommand { get; private set; }
+        public DelegateCommand<string> ClearFilterCommand { get; private set; }
 
         public UniversitiesMainViewModel(CitiesStore citiesStore, SpecialitiesStore specialitiesStore, SubjectsStore subjectsStore, UniversitiesStore universitiesStore)
         {
@@ -83,7 +84,21 @@ namespace EnrolleeGuide.ViewModels
             this.universitiesStore = universitiesStore;
             SearchCommand = new DelegateCommand(LoadDataAsync);
             UniversitySelectedCommand = new DelegateCommand(OnUniversitySelected);
+            ClearFilterCommand = new DelegateCommand<string>(ClearFilter);
             Criteria = new UniversityCriteria();
+        }
+
+        private void ClearFilter(string filter)
+        {
+            switch (filter)
+            {
+                case "cities":
+                    Criteria.CityId = null;
+                    break;
+                case "speciality":
+                    Criteria.SpecialityId = null;
+                    break;
+            }
         }
 
         private void OnUniversitySelected()
@@ -120,7 +135,7 @@ namespace EnrolleeGuide.ViewModels
             {
                 new ToggleListItem<TrainingFormType>(TrainingFormType.FullTime, "Очно"),
                 new ToggleListItem<TrainingFormType>(TrainingFormType.Extramural, "Заочно"),
-                new ToggleListItem<TrainingFormType>(TrainingFormType.FullTime, "Очно-заочно")
+                new ToggleListItem<TrainingFormType>(TrainingFormType.PartTime, "Очно-заочно")
             };
         }
 
@@ -134,6 +149,10 @@ namespace EnrolleeGuide.ViewModels
         private async void LoadDataAsync()
         {
             Universities = await universitiesStore.GetByCriteria(GetFilledCriteria());
+            if (Programs != null)
+            {
+                Programs = new List<ProgramForList>(0);
+            }
         }
 
         private async void LoadProgramsAsync(int universityId)

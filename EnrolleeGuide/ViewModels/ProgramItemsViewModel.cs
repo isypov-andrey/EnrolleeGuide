@@ -83,6 +83,12 @@ namespace EnrolleeGuide.ViewModels
             };
         }
 
+        private async Task LoadDataAsync()
+        {
+            var specialities = await _specialitiesStore.GetAllAsync();
+            Specialities = new ObservableCollection<SpecialityModel>(specialities);
+        }
+
         protected override void Create()
         {
             SelectedItem = new ProgramModel
@@ -99,12 +105,6 @@ namespace EnrolleeGuide.ViewModels
         }
 
         protected override string DeleteConfirmationMessage(ProgramModel item) => $"Вы уверены, что хотите удалить программу '{item.Name}'?";
-
-        private async Task LoadDataAsync()
-        {
-            var specialities = await _specialitiesStore.GetAllAsync();
-            Specialities = new ObservableCollection<SpecialityModel>(specialities);
-        }
 
         private void NavigateToUniversities()
         {

@@ -22,6 +22,8 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Foreground="Black" Text="ЕГЭ: " />
                 <TextBlock Foreground="Black" Text="{Binding SubjectsString}" FontStyle="Italic" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Foreground="#FF999999" Text="Лет обучения:" />
                 <TextBlock Foreground="#FF999999" Text="{Binding DurationInYears}" />
                 <TextBlock Foreground="#FF999999" TextAlignment="Right" Text="{Binding TrainingFormsString}" />

@@ -88,11 +88,34 @@ namespace Database.Repositories
             }
         }
 
-        public async Task<ICollection<UniversityForList>> GetForList(string query, int cityId, int specialityId, ICollection<int> subjectIds, ICollection<TrainingFormType> TrainingFormTypes)
+        public async Task<ICollection<UniversityForList>> GetForList(string query, int? cityId, int? specialityId, ICollection<int> subjectIds, ICollection<TrainingFormType> trainingFormTypes)
         {
-            var res = _readContext.TrainingForms
-                .AsNoTracking()
-                .GroupBy(trainingForm => trainingForm.Program.University)
+            IQueryable<TrainingForm> req = _readContext.TrainingForms
+                .AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                query = query.Trim();
+                req = req.Where(trainingForm => trainingForm.Program.Name.Contains(query) || trainingForm.Program.University.Name.Contains(query));
+            }
+            if (cityId != null)
+            {
+                req = req.Where(trainingForm => trainingForm.Program.University.CityId == cityId);
+            }
+            if (specialityId != null)
+            {
+                req = req.Where(trainingForm => trainingForm.Program.SpecialityId == specialityId);
+            }
+            if (subjectIds != null && subjectIds.Count > 0)
+            {
+                req =  req.Where(trainingForm => trainingForm.Program.EgeSubjects.Any(subject => subjectIds.Contains(subject.Id)));
+            }
+            if (trainingFormTypes != null && trainingFormTypes.Count > 0)
+            {
+                req = req.Where(trainingForm => trainingFormTypes.Contains(trainingForm.Type));
+            }
+
+            var requestQuery = req.GroupBy(trainingForm => trainingForm.Program.University)
                 .Select(
                     q => new UniversityForList
                     {
@@ -106,15 +129,37 @@ namespace Database.Repositories
                     }
                 );
 
-
-            return await res.ToListAsync();
+            return await requestQuery.ToListAsync();
         }
 
-        public async Task<ICollection<ProgramForList>> GetProgramsForList(int universityId, string query, int cityId, int specialityId, ICollection<int> subjectIds, ICollection<TrainingFormType> TrainingFormTypes)
+        public async Task<ICollection<ProgramForList>> GetProgramsForList(int universityId, string query, int? cityId, int? specialityId, ICollection<int> subjectIds, ICollection<TrainingFormType> trainingFormTypes)
         {
-            var res = _readContext.TrainingForms
-                .AsNoTracking()
-                .Where(trainingForm => trainingForm.Program.UniversityId == universityId)
+            IQueryable<TrainingForm> req = _readContext.TrainingForms
+                .AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                query = query.Trim();
+                req = req.Where(trainingForm => trainingForm.Program.Name.Contains(query) || trainingForm.Program.University.Name.Contains(query));
+            }
+            if (cityId != null)
+            {
+                req = req.Where(trainingForm => trainingForm.Program.University.CityId == cityId);
+            }
+            if (specialityId != null)
+            {
+                req = req.Where(trainingForm => trainingForm.Program.SpecialityId == specialityId);
+            }
+            if (subjectIds != null && subjectIds.Count > 0)
+            {
+                req = req.Where(trainingForm => trainingForm.Program.EgeSubjects.Any(subject => subjectIds.Contains(subject.Id)));
+            }
+            if (trainingFormTypes != null && trainingFormTypes.Count > 0)
+            {
+                req = req.Where(trainingForm => trainingFormTypes.Contains(trainingForm.Type));
+            }
+
+            return await req.Where(trainingForm => trainingForm.Program.UniversityId == universityId)
                 .GroupBy(trainingForm => trainingForm.Program)
                 .Select(
                     q => new ProgramForList
@@ -129,10 +174,7 @@ namespace Database.Repositories
                         BudgetExamPoints = q.Max(trainingForm => trainingForm.BudgetExamPoints),
                         DurationInYears = q.Max(trainingForm => trainingForm.DurationInYears)
                     }
-                );
-
-
-            return await res.ToListAsync();
+                ).ToListAsync();
         }
     }
 }

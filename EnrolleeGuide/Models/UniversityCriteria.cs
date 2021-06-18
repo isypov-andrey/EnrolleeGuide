@@ -17,15 +17,15 @@ namespace EnrolleeGuide.Models
             set => SetProperty(ref _query, value);
         }
 
-        private int _cityId;
-        public int CityId
+        private int? _cityId;
+        public int? CityId
         {
             get => _cityId;
             set => SetProperty(ref _cityId, value);
         }
 
-        private int _specialityId;
-        public int SpecialityId
+        private int? _specialityId;
+        public int? SpecialityId
         {
             get => _specialityId;
             set => SetProperty(ref _specialityId, value);

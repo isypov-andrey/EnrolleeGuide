@@ -24,14 +24,14 @@ namespace EnrolleeGuide.Stores
         public async Task<ICollection<ProgramModel>> GetAllAsync()
         {
             var programs = await _repository.GetAllAsync();
-
+            
             return programs.Select(ProgramModel.GetFromDomain)
                 .ToList();
         }
 
         public async Task<ICollection<ProgramModel>> GetByUniversityAsync(UniversityModel universityModel)
         {
-            var programs = await _repository.GetAllAsync();
+            var programs = await _repository.GetByUniversityAsync(universityModel.Id);
 
             return programs.Select(ProgramModel.GetFromDomain)
                 .ToList();

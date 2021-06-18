@@ -12,21 +12,18 @@
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Padding="10,0,5,0">Город обучения</TextBlock>
-                <ComboBox x:Name="citiesComboBox" ItemsSource="{Binding Cities}" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedValue="{Binding Criteria.CityId}" Width="198" Margin="5"/>
-                <ListBox BorderBrush="{x:Null}" ItemsSource="{Binding TrainingForms}">
+                <ComboBox x:Name="citiesComboBox" ItemsSource="{Binding Cities}" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedValue="{Binding Criteria.CityId}" Width="198" Margin="5,5,1,5"/>
+                <Button Content="X" Width="25" Padding="0" FontWeight="Bold" FontSize="12" Height="22" Command="{Binding ClearFilterCommand}" CommandParameter="cities"/>
+                <ListBox BorderBrush="{x:Null}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton Content="{Binding Name}" IsChecked="{Binding Checked}" Height="36" Width="94.5"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
                 </ListBox>
                 <TextBlock Padding="10,0,5,0">Специальность</TextBlock>
-                <ComboBox x:Name="specialityComboBox" ItemsSource="{Binding Specialities}" DisplayMemberPath="Name" SelectedValue="{Binding Criteria.SpecialityId}" SelectedValuePath="Id" Width="288" Margin="5"/>
+                <ComboBox x:Name="specialityComboBox" ItemsSource="{Binding Specialities}" DisplayMemberPath="Name" SelectedValue="{Binding Criteria.SpecialityId}" SelectedValuePath="Id" Width="288" Margin="5,5,1,5"/>
+                <Button Content="X" Width="25" Padding="0" FontWeight="Bold" FontSize="12" Height="22" Command="{Binding ClearFilterCommand}" CommandParameter="speciality"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10">
                 <TextBlock Padding="5,0,5,0">Поиск</TextBlock>
